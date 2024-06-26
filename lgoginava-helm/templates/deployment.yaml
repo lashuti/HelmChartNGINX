@@ -1,0 +1,29 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: web-server-{{.Values.studentName}}
+  namespace: {{.Values.namespace.name}}
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      pod-label: {{.Values.deployment.podName}}
+  template:
+    metadata:
+      labels:
+        pod-label: {{.Values.deployment.podName}}
+    spec:
+      serviceAccountName: {{.Values.serviceAccount.name}} 
+      containers:
+      - name: {{.Values.deployment.containerName}}
+        image: {{.Values.deployment.image}}:{{.Values.deployment.imageVersion}}
+        ports:
+        - containerPort: {{.Values.deployment.containerPort}}
+        volumeMounts:
+        - name: htmlfile
+          mountPath: /lgoginava/index.html
+          subPath: index.html
+      volumes:
+      - name: htmlfile
+        configMap:
+          name: {{.Values.configmap.name}}

@@ -1,0 +1,40 @@
+studentName: lgoginava
+
+namespace: 
+  name: lgoginava-namespace
+  labels:
+    studentName: lgoginava-student
+    environment: development
+
+deployment:
+  podName: nginx-pod
+  containerName: nginx-container
+  image: nginx
+  imageVersion: latest
+  containerPort: 80
+
+serviceAccount:
+  name: lgoginava-sa
+
+role:
+  name: lgoginava-role
+
+rolebinding:
+  name: lgoginava-rolebind
+
+configmap:
+  name: lgoginava-cmap
+
+service:
+  name: lgoginava-service
+  protocol: TCP
+  type: ClusterIP
+  port: 80
+
+virtualService:
+  name: lgoginava-vs
+  host: lgoginava.com
+  ingressGateway: istio-system/ingress-gateway
+  timeout: 5s
+  attempts: 3
+  perTryTimeout: 1s
